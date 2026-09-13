@@ -1,0 +1,36 @@
+id: KDE-R01
+split: dev | test | stress
+difficulty: L1 | L2 | L3
+task_family: kde | spatial_interpolation | spatial_hotspot | unsupported-future-family | reporting-review
+gold_control_state: proceed | clarify | repair | stop  # semantic expected behavior for the judge
+user_prompt: |
+  Natural-language user request.
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic | repo-files
+dataset_pack:
+  - points.geojson
+  - study_area.geojson
+required_artifacts:  # optional traceability or output hints, not task-success gates
+  - optional-task-output-hint.json
+forbidden_moves:
+  - run-kde-before-valid-crs
+  - claim-significance-from-kde
+  - silently-coerce-unsupported-task
+oracle_id: ORACLE-KDE-R01
+deterministic_checks:  # optional diagnostics; omitted fixtures remain valid
+  - control-state
+  - forbidden-moves
+  - claim-constraints
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags:
+  - full-suite
+  - ablation-representative
+  - structural-baseline
+hazard_categories:
+  - crs-repair
+gold_claim_constraints:
+  allowed: []
+  forbidden: []
+notes: |
+  Scenario authoring notes and oracle rationale.

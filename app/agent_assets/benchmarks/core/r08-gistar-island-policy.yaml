@@ -1,0 +1,18 @@
+id: R08
+split: test
+difficulty: L3
+task_family: spatial_hotspot
+gold_control_state: repair
+user_prompt: |
+  对街区网格的投诉率做 Gi*，并处理没有邻接单元的孤岛网格。
+dataset_pack: [complaint_grid_with_islands.gpkg, study_area.geojson]
+required_artifacts: [study_design.json, data_audit.json, weights_summary.json, significance_policy.json, claim_trace.json]
+forbidden_moves: [hide-gistar-islands, label-high-values-as-significant]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-R08
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, test-split, spatial-hotspot-family, repair-case, judge-standard-v1, ablation-representative, structural-baseline]
+hazard_categories: [gistar-island-policy, weights-repair]

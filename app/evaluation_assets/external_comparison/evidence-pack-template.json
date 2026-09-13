@@ -1,0 +1,34 @@
+{
+  "schema": "geo-agent.evaluation.external-evidence-pack.v1",
+  "framework_id": "gis-copilot",
+  "scenario_id": "P01",
+  "repeat_index": 1,
+  "original_prompt": "Copy the exact benchmark scenario user_prompt here.",
+  "dataset_root": "data",
+  "dataset_pack": ["Copy the benchmark dataset_pack entries here."],
+  "dataset_import_notes": "Record how the external framework loaded the same files.",
+  "run_status": {
+    "status": "completed",
+    "terminal_reason": "completed",
+    "timed_out": false,
+    "duration_seconds": 0.0,
+    "started_at": "2026-05-03T00:00:00+08:00",
+    "finished_at": "2026-05-03T00:00:00+08:00",
+    "errors": []
+  },
+  "model": {
+    "provider": "operator-recorded",
+    "model": "operator-recorded",
+    "temperature": 0.0
+  },
+  "final_answer_path": "final-answer.md",
+  "failure_note": "",
+  "operator_notes_path": "operator-notes.md",
+  "evidence": {
+    "transcript": ["transcript.md"],
+    "logs": ["logs/run.log"],
+    "generated_code": ["generated/analysis.py"],
+    "tool_notes": [],
+    "artifacts": ["artifacts/map-summary.md"]
+  }
+}

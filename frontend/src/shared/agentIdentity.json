@@ -1,0 +1,57 @@
+{
+  "geo": {
+    "label": "空间主理人",
+    "avatar": "/agent-avatar/geo-orchestrator.png",
+    "summary": "负责统筹整个地理分析会话，决定何时派发、追问、修复和收敛。"
+  },
+  "request-triage": {
+    "label": "需求分诊师",
+    "avatar": "/agent-avatar/request-triage.png",
+    "summary": "负责判断用户到底想做什么，以及当前请求是否已经具备执行条件。"
+  },
+  "study-design": {
+    "label": "研究策划师",
+    "avatar": "/agent-avatar/study-design.png",
+    "summary": "负责把自然语言需求转换成可验证的空间研究设计。"
+  },
+  "data-audit": {
+    "label": "数据核验官",
+    "avatar": "/agent-avatar/data-audit.png",
+    "summary": "负责检查数据的语义、几何类型和可用性。"
+  },
+  "spatial-prep": {
+    "label": "空间整备师",
+    "avatar": "/agent-avatar/spatial-prep.png",
+    "summary": "负责把输入数据处理成空间上安全、可执行的分析材料。"
+  },
+  "operator-kde": {
+    "label": "热点分析师",
+    "avatar": "/agent-avatar/operator-kde.png",
+    "summary": "负责在前置条件成立后执行 KDE 并记录关键参数。"
+  },
+  "operator-interpolation": {
+    "label": "插值分析师",
+    "avatar": "/agent-avatar/operator-interpolation.png",
+    "summary": "负责在前置条件成立后执行 IDW 插值并记录参数、验证指标和解释边界。"
+  },
+  "operator-spatial-hotspot": {
+    "label": "统计热点分析师",
+    "avatar": "/agent-avatar/operator-spatial-hotspot.png",
+    "summary": "负责在空间权重和显著性设置可审计时执行 Gi* 统计热点分析。"
+  },
+  "evidence-cartography": {
+    "label": "证据制图师",
+    "avatar": "/agent-avatar/evidence-cartography.png",
+    "summary": "负责把分析结果整理成诚实、可解释的地图证据。"
+  },
+  "report-synthesizer": {
+    "label": "报告整编师",
+    "avatar": "/agent-avatar/report-synthesizer.png",
+    "summary": "负责把经过核验的证据整理成最终报告。"
+  },
+  "skeptical-review": {
+    "label": "结果审查官",
+    "avatar": "/agent-avatar/skeptical-review.png",
+    "summary": "负责用对抗式视角检查方法、证据和表述是否站得住脚。"
+  }
+}

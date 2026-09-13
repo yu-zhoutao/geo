@@ -1,0 +1,28 @@
+id: thesis-balanced-v1
+benchmark_version: geospatial-benchmark-v1-real-thesis
+benchmark_root: app/agent_assets/benchmarks
+scenario_selector: thesis-core-real-v1
+variants:
+  - full-system
+  - single-agent
+  - no-skills
+  - no-skeptical-review
+full_system_selector: thesis-core-real-v1
+full_system_repeats: 3
+comparison_selector: thesis-ablation-real-v1
+comparison_repeats: 3
+wall_clock_budget_seconds: 3600
+max_turns: 0
+fairness_model: inherit
+fairness_temperature: 0.0
+fairness_dataset_policy: scenario-dataset-pack
+fairness_tool_policy: shared-tool-catalog
+fairness_runtime_policy: shared-budget
+runner_isolation_mode: per-campaign
+runner_resume_policy: append-attempts
+runner_readiness_timeout_seconds: 120
+scoring_mode: llm-judge
+judge_model: glm-5.1
+judge_temperature: 0.0
+output_root: evaluation-runs
+output_directory_policy: timestamped-campaign-dir

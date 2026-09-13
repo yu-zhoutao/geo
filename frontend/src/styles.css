@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+@import './components/chat/markdownStyles.css';
+
+@theme {
+  --color-bjut-blue: #0096c3;
+  --color-bjut-blue-hover: #007ba1;
+}
+
+:root {
+  color: #1a1a1a;
+  background: #f9fafb; /* gray-50 */
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f4f4f5; /* gray-50 */
+    background: #09090b; /* zinc-950 or gray-950 */
+  }
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-bjut-blue) 58%, white) transparent;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-bjut-blue) 52%, transparent) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+  background-color: color-mix(in srgb, var(--color-bjut-blue) 42%, white);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--color-bjut-blue) 60%, white);
+}
+
+@media (prefers-color-scheme: dark) {
+  * {
+    scrollbar-color: color-mix(in srgb, var(--color-bjut-blue) 50%, black) transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--color-bjut-blue) 44%, #0f172a);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--color-bjut-blue) 62%, #0f172a);
+  }
+}

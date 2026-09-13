@@ -1,0 +1,43 @@
+[project]
+name = "geo-agent"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi~=0.135.1",
+    "mcp>=1.24.0,<2.0.0",
+    "openai",
+    "openhands-sdk~=1.14.0",
+    "pydantic-settings",
+    "sse-starlette",
+    "zai-sdk",
+    "uvicorn"
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx",
+    "pytest~=8.4",
+    "pytest-asyncio"
+]
+docker = [
+    "docker>=7,<8"
+]
+rl = [
+    "accelerate",
+    "datasets",
+    "peft",
+    "torch>=2.7,<2.8",
+    "transformers",
+    "trl"
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["setuptools>=80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]

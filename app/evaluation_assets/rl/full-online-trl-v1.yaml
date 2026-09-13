@@ -1,0 +1,36 @@
+id: full-online-trl-v1
+benchmark_root: app/agent_assets/benchmarks
+campaign_path: app/evaluation_assets/campaigns/thesis-balanced-v1.yaml
+variant_root: app/evaluation_assets/variants
+variant_id: full-system
+scenario_selector: thesis-core-real-v1
+strategy_set:
+  - balanced
+  - crs_first
+  - claim_conservative
+  - repair_stop_first
+  - sensitivity_first
+episode_cap: 32
+parallel_rollout_cap: 1
+wall_clock_budget_seconds: 50400
+rollout_wall_clock_budget_seconds: 900
+rollout_retry_count: 1
+algorithm: rloo
+group_completions_per_prompt: 2
+max_completion_length: 160
+learning_rate: 0.000001
+logging_steps: 1
+save_steps: 8
+reward_formula_id: geospatial-strategy-reward-v1
+policy_model_id: /raid/$USER/geo-agent/models/Qwen/Qwen3.5-2B
+lora_rank: 8
+lora_alpha: 16
+lora_dropout: 0.05
+lora_target_modules: all-linear
+checkpoint_root: checkpoints
+downstream_model_provider: deepseek
+downstream_model: deepseek-v4-flash
+judge_model: glm-5.1
+judge_temperature: 0.0
+output_root: /raid/$USER/geo-agent/experiments/rl-online
+python_index_url: https://pypi.tuna.tsinghua.edu.cn/simple

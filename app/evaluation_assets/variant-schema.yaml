@@ -1,0 +1,25 @@
+id: variant-id
+label: Human-readable variant label
+kind: internal-agent-runtime | external-adapter
+agent_asset_mode: default | generated-single-agent | disable-skills | disable-role
+agent_asset_root: app/agent_assets
+agent_asset_overlay_root: none | app/evaluation_assets/variant_overlays/variant-id
+enabled_roles:
+  - geo-orchestrator
+disabled_roles:
+  - skeptical-review
+skill_mode: enabled | disabled | partial
+enabled_skills:
+  - all
+disabled_skills:
+  - all
+model: inherit | model-id | none
+temperature: number-0-to-1
+runtime_wall_clock_budget_seconds: nonnegative-integer-zero-means-unlimited
+max_turns: nonnegative-integer-zero-means-unlimited
+scenario_selector: full-suite | ablation-representative | thesis-core-real-v1 | thesis-ablation-real-v1
+scoring_eligibility:
+  - llm-judge
+notes: |
+  Variant manifests describe runtime asset overlays, role and skill
+  availability, shared model settings, runtime budgets, and scoring eligibility.

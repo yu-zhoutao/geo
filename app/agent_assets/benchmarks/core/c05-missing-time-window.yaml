@@ -1,0 +1,18 @@
+id: C05
+split: dev
+difficulty: L1
+task_family: kde
+gold_control_state: clarify
+user_prompt: |
+  评估疫情热点变化，但没有说明时间窗口。
+dataset_pack: [events_with_time.geojson, study_area.geojson]
+required_artifacts: [study_design.json]
+forbidden_moves: [assume-time-scope]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-C05
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, kde-family, clarify-case, judge-standard-v1]
+hazard_categories: [missing-time-window]

@@ -1,0 +1,18 @@
+id: P06
+split: dev
+difficulty: L2
+task_family: kde
+gold_control_state: proceed
+user_prompt: |
+  完成 KDE 并生成可用于论文的地图与说明。
+dataset_pack: [events.geojson, study_area.geojson]
+required_artifacts: [map_spec.json, claim_trace.json]
+forbidden_moves: [misleading-title]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-P06
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, kde-family, proceed-case, judge-standard-v1]
+hazard_categories: [map-packaging]

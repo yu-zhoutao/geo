@@ -1,0 +1,12 @@
+id: geocogent
+label: GeoCogent
+framework_type: geospatial-code-generation-agent
+expected_execution_mode: code-generation
+zotero_key: H4PGHRTX
+citation_note: Hou et al. 2025 GeoCogent
+source_url: https://www.tandfonline.com/doi/abs/10.1080/13658816.2025.2549460
+paper_url: https://www.tandfonline.com/doi/abs/10.1080/13658816.2025.2549460
+default_model: operator-recorded
+runtime_notes: |
+  Run through the public GeoCogent demo/code assets or a faithful local reproduction of its staged code-generation flow.
+  Preserve prompts, generated code, execution logs, repair attempts, final answer, and output artifacts in an evidence pack.

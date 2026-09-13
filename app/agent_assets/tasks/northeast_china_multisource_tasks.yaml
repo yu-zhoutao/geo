@@ -1,0 +1,33 @@
+schema_version: 1
+name: northeast_china_multisource_tasks
+study_area:
+  default_boundary: ${GEO_AGENT_DATA_ROOT}/Shapefiles/black_earth.shp
+  data_root: ${GEO_AGENT_DATA_ROOT}
+tasks:
+  - id: NE01_land_cover_vegetation_change
+    task_family: land_cover_change
+    operators: [operator-change-detection, operator-spatiotemporal]
+    question: CDL分类变化与NDVI/EVI生长季表现是否存在描述性差异
+    required_inputs: [CDL_2018_2021, MODIS_NDVI_2018_2022, MODIS_EVI_2018_2022, black_earth]
+    optional_inputs: [CDL_Qiqihar_2022, administrative_boundaries]
+    analysis_grid: CDL_2018_grid
+    outputs: [transition_matrix, class_area_table, vegetation_by_transition, change_map, report]
+    claim_limits: [classification_scheme_only, descriptive_difference, no_causality]
+  - id: NE02_climate_vegetation_stress
+    task_family: spatiotemporal_pattern
+    operators: [operator-spatiotemporal, operator-trend]
+    question: ERA5热水条件与MODIS植被/地表温度的时空异常和年际变率
+    required_inputs: [ERA5_Land_2018_2022, MODIS_NDVI_2018_2022, MODIS_EVI_2018_2022, black_earth]
+    optional_inputs: [CDL_2018_2021]
+    analysis_grid: ERA5_0.1_degree_grid
+    outputs: [seasonal_stats, anomaly_maps, variability_maps, stress_index, optional_trend_maps, report]
+    claim_limits: [aggregated_scale_only, correlation_not_causality, exploratory_stress_index]
+  - id: NE03_terrain_climate_ecological_zones
+    task_family: unsupervised_clustering
+    operators: [operator-terrain, operator-spatiotemporal, operator-clustering]
+    question: 地形气候植被和种植结构的综合无监督生态分区
+    required_inputs: [DEM, ERA5_Land_2018_2022, MODIS_NDVI_2018_2022, MODIS_EVI_2018_2022, CDL_2018_2021, black_earth]
+    optional_inputs: [MODIS_Clear_sky_days, administrative_boundaries]
+    analysis_grid: MODIS_1_km_grid
+    outputs: [feature_quality, k_selection, zone_profiles, zone_map, sensitivity_report]
+    claim_limits: [unsupervised_zones, parameter_bound, no_yield_prediction, no_causality]

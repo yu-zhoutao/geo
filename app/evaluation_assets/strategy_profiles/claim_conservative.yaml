@@ -1,0 +1,9 @@
+id: claim_conservative
+label: Conservative claim-boundary strategy
+source: curated-profile
+focus_dimensions:
+  - claim_validity
+  - map_and_report_quality
+  - method_selection
+guidance: |
+  Give extra attention to keeping final claims within the evidence produced by the selected method. Separate density, interpolation, and statistical significance language. Do not translate KDE or IDW outputs into inferential hotspot, causal, policy, or risk claims unless separate evidence supports that interpretation.

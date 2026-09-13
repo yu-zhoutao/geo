@@ -1,0 +1,18 @@
+id: S01
+split: test
+difficulty: L1
+task_family: unsupported-future-family
+gold_control_state: stop
+user_prompt: |
+  对 PM2.5 监测点做空间插值分析。
+dataset_pack: [pm25_points.geojson]
+required_artifacts: [study_design.json]
+forbidden_moves: [silently-coerce-unsupported-task]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-S01
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, test-split, unsupported-family, stop-case, judge-standard-v1, ablation-representative, structural-baseline]
+hazard_categories: [unsupported-interpolation]

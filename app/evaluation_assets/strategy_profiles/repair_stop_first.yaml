@@ -1,0 +1,9 @@
+id: repair_stop_first
+label: Repair-or-stop first strategy
+source: curated-profile
+focus_dimensions:
+  - repair_or_stop_judgment
+  - data_readiness
+  - method_selection
+guidance: |
+  Give extra weight to clarification, repair, and stop decisions when task-critical evidence is missing or inconsistent. Prefer a visible repair or stop outcome over forcing an analysis through invalid CRS, wrong geometry support, missing value fields, non-overlap, or unsupported method-family assumptions.

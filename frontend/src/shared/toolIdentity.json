@@ -1,0 +1,110 @@
+{
+  "todowrite": {
+    "label": "更新执行计划",
+    "family": "planning",
+    "summary": "记录和更新 OpenCode 原生待办事项。",
+    "icon": "list-task"
+  },
+  "update_todos": {
+    "label": "更新执行计划",
+    "family": "planning",
+    "summary": "发布代理当前待办列表供界面展示。",
+    "icon": "list-task"
+  },
+  "task": {
+    "label": "派发子任务",
+    "family": "subagent",
+    "summary": "把当前问题交给专门角色或子会话处理。",
+    "icon": "diagram"
+  },
+  "question": {
+    "label": "询问用户",
+    "family": "question",
+    "summary": "向用户发起澄清问题并等待回答。",
+    "icon": "question"
+  },
+  "skill": {
+    "label": "调用技能",
+    "family": "skill",
+    "summary": "加载运行时可用的专业技能说明。",
+    "icon": "journal-code"
+  },
+  "bash": {
+    "label": "运行命令",
+    "family": "command",
+    "summary": "在运行时工作区执行 shell 命令。",
+    "icon": "terminal"
+  },
+  "read": {
+    "label": "读取文件",
+    "family": "file",
+    "summary": "读取工作区中的文件内容。",
+    "icon": "file-text"
+  },
+  "write": {
+    "label": "写入文件",
+    "family": "file",
+    "summary": "向工作区写入文件内容。",
+    "icon": "file-text"
+  },
+  "edit": {
+    "label": "编辑文件",
+    "family": "file",
+    "summary": "对工作区文件应用局部修改。",
+    "icon": "file-text"
+  },
+  "grep": {
+    "label": "搜索文本",
+    "family": "search",
+    "summary": "在工作区中搜索匹配文本。",
+    "icon": "search"
+  },
+  "glob": {
+    "label": "匹配文件",
+    "family": "search",
+    "summary": "按模式查找工作区文件。",
+    "icon": "search"
+  },
+  "list": {
+    "label": "列出文件",
+    "family": "file",
+    "summary": "查看工作区目录结构。",
+    "icon": "file-text"
+  },
+  "codesearch": {
+    "label": "代码搜索",
+    "family": "search",
+    "summary": "通过运行时代码搜索工具查找相关实现。",
+    "icon": "search"
+  },
+  "webfetch": {
+    "label": "读取网页",
+    "family": "network",
+    "summary": "读取指定网页内容。",
+    "icon": "search"
+  },
+  "websearch": {
+    "label": "网页搜索",
+    "family": "network",
+    "summary": "搜索公开网页信息。",
+    "icon": "search"
+  },
+  "lsp": {
+    "label": "语言服务",
+    "family": "code",
+    "summary": "查询语言服务提供的代码智能信息。",
+    "icon": "gear"
+  },
+  "get_session_context": {
+    "label": "读取上下文",
+    "family": "context",
+    "summary": "读取工作区、挂载数据、运行环境、证据台账和产物状态。",
+    "icon": "search"
+  },
+  "record_run_evidence": {
+    "label": "记录证据",
+    "family": "evidence",
+    "summary": "登记智能体脚本生成的产物、数据画像、验证事实、参数快照或声明追踪。",
+    "icon": "file-text"
+  }
+}

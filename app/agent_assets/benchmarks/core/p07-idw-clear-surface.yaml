@@ -1,0 +1,21 @@
+id: P07
+split: dev
+difficulty: L1
+task_family: spatial_interpolation
+gold_control_state: proceed
+user_prompt: |
+  使用 OpenAQ珠三角PM25监测数据/openaq_pearl_river_delta_pm25_latest.geojson 中的
+  pm25_value 字段做 IDW 插值，生成广州-佛山站点覆盖范围内的连续 PM2.5 浓度面。
+  请说明站点数量、坐标系、插值范围、幂参数、搜索邻域或邻居数，并用留一验证或敏感性检查
+  评价插值稳定性。不同站点观测时间不完全一致时，应在限制中明确说明。
+dataset_pack: [OpenAQ珠三角PM25监测数据/openaq_pearl_river_delta_pm25_latest.geojson, OpenAQ珠三角PM25监测数据/openaq_china_demo_sources.json]
+required_artifacts: [study_design.json, data_audit.json, crs_decision.json, idw_parameters.json, validation_metrics.json, claim_trace.json]
+forbidden_moves: [route-idw-to-kde, claim-significance-from-idw]
+dataset_root: data
+dataset_pack_mode: repo-files
+oracle_id: ORACLE-P07
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, spatial-interpolation-family, proceed-case, judge-standard-v1, ablation-representative, structural-baseline, thesis-core-real-v1]
+hazard_categories: [real-pm25-idw, interpolation-surface, temporal-misalignment]

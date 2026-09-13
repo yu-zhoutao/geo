@@ -1,0 +1,21 @@
+id: R07
+split: dev
+difficulty: L2
+task_family: spatial_interpolation
+gold_control_state: repair
+user_prompt: |
+  对 OpenAQ北京PM25监测数据/openaq_beijing_pm25_latest.geojson 中的 pm25_value 字段做 IDW，
+  输出像元大小约 1000 米的连续浓度面，并使用北京区县界作为空间参考或裁剪范围。
+  输入点是 EPSG:4326，经纬度不能直接用于米制像元、搜索半径或距离权重；请先选择合适的北京米制投影，
+  同时说明 17 个站点对插值可靠性的限制。
+dataset_pack: [OpenAQ北京PM25监测数据/openaq_beijing_pm25_latest.geojson, 北京市道路街道区县shp文件/beijing-区县界_region.shp, OpenAQ北京PM25监测数据/openaq_china_demo_sources.json]
+required_artifacts: [study_design.json, data_audit.json, crs_decision.json, idw_parameters.json, claim_trace.json]
+forbidden_moves: [run-idw-in-degrees, claim-significance-from-idw]
+dataset_root: data
+dataset_pack_mode: repo-files
+oracle_id: ORACLE-R07
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, spatial-interpolation-family, repair-case, judge-standard-v1, ablation-representative, structural-baseline, thesis-core-real-v1, thesis-ablation-real-v1]
+hazard_categories: [real-pm25-idw, idw-crs-repair, crs-repair, unit-hazard, sparse-monitoring-network]

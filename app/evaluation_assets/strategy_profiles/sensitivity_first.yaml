@@ -1,0 +1,9 @@
+id: sensitivity_first
+label: Sensitivity-first strategy
+source: curated-profile
+focus_dimensions:
+  - uncertainty_and_sensitivity
+  - parameterization
+  - claim_validity
+guidance: |
+  Give extra attention to parameter sensitivity and uncertainty when the task depends on bandwidth, cell size, interpolation power, neighborhood choice, spatial weights, significance thresholds, sample-size limits, edge effects, or map classification. Record actual checks or a clear infeasibility reason rather than only listing generic caveats.

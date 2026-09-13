@@ -1,0 +1,30 @@
+id: full-system
+label: Full system
+kind: internal-agent-runtime
+agent_asset_mode: default
+agent_asset_root: app/agent_assets
+agent_asset_overlay_root: none
+enabled_roles:
+  - geo-orchestrator
+  - request-triage
+  - study-design
+  - data-audit
+  - spatial-prep
+  - operator-kde
+  - operator-interpolation
+  - operator-spatial-hotspot
+  - evidence-cartography
+  - report-synthesizer
+  - skeptical-review
+disabled_roles: []
+skill_mode: enabled
+enabled_skills:
+  - all
+disabled_skills: []
+model: inherit
+temperature: 0.0
+runtime_wall_clock_budget_seconds: 3600
+max_turns: 0
+scenario_selector: thesis-core-real-v1
+scoring_eligibility:
+  - llm-judge

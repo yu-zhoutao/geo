@@ -1,0 +1,40 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "chrome-devtools": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--headless",
+        "--isolated",
+        "--no-usage-statistics"
+      ]
+    },
+    "zotero": {
+      "enabled": true,
+      "type": "local",
+      "command": [
+        "uv",
+        "tool",
+        "run",
+        "--from",
+        "zotero-mcp-server[semantic]",
+        "zotero-mcp"
+      ],
+      "environment": {
+        "ZOTERO_LOCAL": "true"
+      }
+    }
+  },
+  "permission": {
+    "read": {
+      ".env": "deny"
+    },
+    "write": {
+      ".env": "deny"
+    }
+  }
+}

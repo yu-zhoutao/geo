@@ -1,0 +1,22 @@
+id: P01
+split: dev
+difficulty: L1
+task_family: kde
+gold_control_state: proceed
+user_prompt: |
+  使用附件数据目录中的 FCD数据/sample_200_taxis.jsonl 作为北京出租车轨迹样本，
+  结合 北京市道路街道区县shp文件/beijing-区县界_region.shp 或乡镇界作为研究区边界，
+  对有效出租车点事件完成 KDE 热点分析。请先检查经纬度范围、CRS、点数量和异常值，
+  再选择米制投影、带宽和像元大小，并在结论中只讨论事件密度集中区域，不要把 KDE
+  解释为统计显著热点。
+dataset_pack: [FCD数据/sample_200_taxis.jsonl, 北京市道路街道区县shp文件/beijing-区县界_region.shp, 北京市道路街道区县shp文件/beijing-乡镇界_region.shp]
+required_artifacts: [study_design.json, crs_decision.json, claim_trace.json]
+forbidden_moves: [claim-significance-from-kde]
+dataset_root: data
+dataset_pack_mode: repo-files
+oracle_id: ORACLE-P01
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, kde-family, proceed-case, judge-standard-v1, ablation-representative, structural-baseline, thesis-core-real-v1, thesis-ablation-real-v1]
+hazard_categories: [real-fcd-kde, crs-projection, kde-parameterization]

@@ -1,0 +1,18 @@
+id: S02
+split: test
+difficulty: L2
+task_family: kde
+gold_control_state: stop
+user_prompt: |
+  点数据缺少 CRS 且没有任何可信元数据。
+dataset_pack: [events_unknown_crs.geojson]
+required_artifacts: [crs_decision.json]
+forbidden_moves: [guess-crs-without-evidence]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-S02
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, test-split, kde-family, stop-case, judge-standard-v1, ablation-representative, structural-baseline]
+hazard_categories: [unrecoverable-crs]

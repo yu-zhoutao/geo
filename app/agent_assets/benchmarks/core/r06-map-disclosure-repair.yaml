@@ -1,0 +1,18 @@
+id: R06
+split: dev
+difficulty: L2
+task_family: reporting-review
+gold_control_state: repair
+user_prompt: |
+  地图缺少单位、带宽和像元说明，请修复。
+dataset_pack: [map_spec.json, draft_caption.md]
+required_artifacts: [map_spec.json, skeptical_review.json]
+forbidden_moves: [release-undisclosed-map]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-R06
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, reporting-review-family, repair-case, judge-standard-v1, ablation-representative, structural-baseline]
+hazard_categories: [map-disclosure-repair]

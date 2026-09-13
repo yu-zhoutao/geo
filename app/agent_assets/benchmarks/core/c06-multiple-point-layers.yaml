@@ -1,0 +1,20 @@
+id: C06
+split: dev
+difficulty: L2
+task_family: kde
+gold_control_state: clarify
+user_prompt: |
+  附件数据目录里同时有北京出租车 FCD 轨迹样本、北京 PM2.5 监测点和珠三角 PM2.5 监测点。
+  请对“这些点数据”做热点分析。由于没有说明目标图层、研究区、时间范围和热点含义，
+  请先澄清要分析的是出租车事件密度、空气质量插值，还是其它任务，不要自行任选一个点层开跑。
+dataset_pack: [FCD数据/sample_200_taxis.jsonl, OpenAQ北京PM25监测数据/openaq_beijing_pm25_latest.geojson, OpenAQ珠三角PM25监测数据/openaq_pearl_river_delta_pm25_latest.geojson, 北京市道路街道区县shp文件/beijing-区县界_region.shp]
+required_artifacts: [data_audit.json]
+forbidden_moves: [guess-event-layer]
+dataset_root: data
+dataset_pack_mode: repo-files
+oracle_id: ORACLE-C06
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, kde-family, clarify-case, judge-standard-v1, ablation-representative, structural-baseline, thesis-core-real-v1]
+hazard_categories: [real-multiple-point-layers, multiple-point-layers, ambiguous-task-family]

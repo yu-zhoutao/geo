@@ -1,0 +1,170 @@
+schema: spec-driven
+
+context: |
+  Project positioning:
+  This repository is building a local-first research prototype around a backend-managed OpenCode runtime for general geospatial analysis tasks. The goal is not to reimplement an agent framework or to build a generic geospatial SaaS product. The goal is to create a usable thesis-facing web application that wraps an application-managed OpenCode server, exposes reusable geospatial MCP capabilities, bundles geospatial agent instructions and skills, and supports real runtime-native multi-agent execution across multiple analysis task families. KDE is the first implemented validation task, but the architecture and specs must not assume a KDE-only system.
+
+  Confirmed architecture baseline:
+  - The primary system boundary is a thin app shell around a backend-managed OpenCode server accessed through its HTTP API.
+  - The frontend web app stack is Vue 3 + Vite + TypeScript.
+  - The backend stack is Python, and the default backend framework should be FastAPI unless a later spec provides a strong reason to choose something else.
+  - The Python backend should be designed as a fully asyncio-native service by default, including async request handling, async HTTP integration, async subprocess supervision, and non-blocking streaming.
+  - The managed OpenCode runtime should remain the workflow owner wherever it already exposes the needed concepts, especially sessions, messages, subagent calls, skills, tool history, and traces. App-visible todos are intentionally published through the application-owned MCP todo bridge so OpenCode-native `todowrite` can stay disabled.
+  - The default runtime topology is a single user-facing session with a primary orchestrator agent that dynamically dispatches stable specialist roles such as planner, data-prep, analysis, viz, report, and reflection. These roles are stable responsibilities, not a fixed execution order.
+  - The browser should never talk directly to runtime internals. Browser interactions should go through the app's own web and backend surfaces.
+  - Live agent updates should use server-sent events (SSE) by default.
+  - Common geospatial preprocessing operations and task-specific spatial operators should be exposed to the runtime through backend-hosted MCP capabilities.
+  - The runtime should integrate with those domain tools through bundled agents, bundled skills, and backend-managed MCP wiring rather than through uncontrolled user-global configuration.
+  - The backend must manage the OpenCode server lifecycle, including startup, shutdown, restart, health checks, runtime readiness, and full application-owned config injection.
+  - The prototype should run without requiring the user to author or provide extra agent-framework configuration. Agent roles, skills, MCP wiring, and default runtime behavior should be bundled and managed by the application.
+  - The application must not rewrite user prompts before they enter the main agent flow.
+  - The application must not provide preset plans, fixed processing flows, or canned result templates as a substitute for real runtime behavior.
+  - Reproducibility in this repository means preserving a real run's messages, todo evolution, subagent activity, tool calls, artifacts, and session metadata as an evidence chain.
+  - The backend may maintain only the smallest supplemental local metadata needed for artifact discovery, session listing, and UI rendering when that information is not already available from runtime state.
+  - The first deployment target is a single-machine local demo environment.
+  - Generated artifacts should live on the local filesystem.
+  - This prototype assumes trusted local/demo usage with no authentication or user accounts for now.
+  - Runtime setup should remain as self-contained as possible and should avoid inheriting uncontrolled per-user global agent configuration wherever feasible.
+  - The only acceptable external configuration inputs are environment-specific secrets and non-bundled datasets when required.
+
+  System decomposition:
+  1. Vue web UI:
+      - Presents a message-first agent notebook rather than a preset workflow dashboard.
+      - Lets users create or resume sessions and send natural-language messages to agent sessions.
+      - Renders user messages, assistant messages, todo updates, subagent calls, tool activity, intermediate artifacts, tables, charts, maps, markdown reports, and reflection output inline in the main transcript.
+      - Uses sidebars only for minimal global state such as the current todo, final artifacts, runtime status, workspace entry points, and session navigation.
+      - Uses Vue 3 + Vite + TypeScript + Tailwind CSS v4 for UI implementation.
+      - Prioritizes transparency of agent behavior and evidence visibility over dashboard chrome.
+
+  2. Thin Python backend service:
+      - Exposes browser-facing APIs.
+      - Is expected to be implemented with FastAPI unless a later spec deliberately changes that choice.
+      - Coordinates requests between the web app and the backend-managed OpenCode runtime.
+      - Streams live updates to the browser through SSE.
+      - Performs only minimal response shaping needed to turn runtime events and artifact metadata into UI-consumable typed transcript blocks.
+      - Stores only metadata that is not already available from runtime state and is necessary for local UX concerns such as session listing, workspace discovery, or artifact lookup.
+      - Hosts MCP capabilities for reusable geospatial preprocessing, verification helpers, and task-specific spatial analysis operators.
+      - Runs suitable long-running backend work as managed subprocess tasks when deterministic local execution must not block request handlers.
+      - Should default to asyncio-native APIs, async orchestration, async subprocess management, async file or network boundaries where practical, and non-blocking supervision of runtime and task processes.
+      - Must track subprocess state explicitly and clean up child processes reliably.
+      - Must avoid orphaned or leaked processes by handling normal completion, failures, cancellation, shutdown, and restart scenarios.
+      - Must keep task workers as strict subprocesses of the backend process rather than spawning detached background workers.
+      - Must ensure backend termination triggers termination and cleanup of all task subprocesses.
+      - Manages the OpenCode server process lifecycle for local or demo use, including start, stop, restart, availability checks, config injection, and cleanup.
+      - Must own runtime bootstrap so the user is not asked to manually install or register agents, skills, MCP servers, or other agent-framework configuration artifacts.
+      - Must not grow into a second workflow orchestration engine.
+
+  3. Coding-agent runtime (current default: OpenCode server):
+      - Owns the primary session execution and remains the source of truth for conversations, questions, subagent activity, and tool history whenever the runtime already exposes that information; publishes app-visible todo state through the configured MCP todo bridge.
+      - Hosts a primary orchestrator agent plus a stable set of specialist subagents relevant to geospatial-analysis workflows.
+      - Uses bundled agent instructions and bundled skills to encode geospatial working methods, professional guardrails, and role-specific behavior.
+      - Dynamically decides which subagent to call next based on current observations, tool results, blocking conditions, and clarification needs rather than following a fixed application-authored step graph.
+      - Connects to backend-provided domain tools through MCP configuration.
+      - Should be treated as a backend-managed runtime boundary from the app's perspective, even in local single-machine setups.
+      - Should be bootstrapped with fully application-owned config rather than inheriting user-global runtime config.
+
+  4. Local Python geospatial execution layer:
+      - Provides the actual execution environment for local geospatial data processing.
+      - Is typically implemented as Python modules, utilities, or subprocess-backed services invoked behind backend-hosted MCP capabilities rather than being treated as a separate product-facing system.
+      - Should support operations such as data loading, geometry inspection, projection transformation, spatial clipping or masking, reusable feature preparation, task-specific spatial operators, visualization generation, and report-oriented artifact generation.
+      - Should keep reusable preprocessing, verification-aware metadata, and operator-specific logic separate so KDE can ship first without constraining later tasks such as buffer analysis, interpolation, clustering, or regression.
+
+  Source-of-truth and persistence rules:
+  - If information is already available from the managed runtime, treat that runtime as the source of truth.
+  - The backend should only persist data that is not already available from the managed runtime and is truly needed for the local web app experience.
+  - Do not assume a full relational model for users, organizations, billing, or multi-tenant project ownership.
+  - Do not add a user system unless explicitly requested later.
+  - Keep local persistence small, explain why each stored record exists, and prefer filesystem-backed indexing or lightweight metadata over building a large application database.
+
+  UI scope and user experience expectations:
+  The MVP is a message-first agent notebook, not a preset workflow dashboard. The UI should allow a user to:
+  - create or resume an agent session
+  - send natural-language requests to the agent
+  - inspect current todo progress
+  - observe subagent calls, tool actions, intermediate outputs, and status changes inline in the transcript
+  - answer agent questions or approvals from the UI
+  - browse outputs such as maps, reports, logs, and intermediate files without leaving the main evidence flow
+  - understand what the agent is doing without reading raw server logs or switching to a separate workflow graph view
+
+  Runtime integration expectations:
+  - Reuse the chosen runtime's native capabilities first, especially sessions, custom agents, subagent calls, skills or context loading, MCP integration, tool invocation, and execution history. For app-visible todo state, prefer the configured MCP todo bridge over OpenCode-native `todowrite`.
+  - Do not propose rewriting these capabilities in the app layer unless there is a strong, explicit reason.
+  - Preserve the user's original prompt verbatim as the main session input; domain guidance belongs in bundled agent instructions and bundled skills instead.
+  - Prefer integrating domain tools into the runtime through MCP configuration, custom tools, and backend-managed capabilities instead of relying on uncontrolled user-global agent configuration.
+  - The Python backend is allowed to manage the runtime lifecycle, but it should not duplicate the runtime's internal session execution logic unless a spec explicitly justifies it.
+  - The engineering novelty should come from the geospatial role design, bundled skills, MCP-exposed domain tools, verification strategy, artifact traceability, runtime isolation, and message-first UI rather than from replacing runtime internals.
+  - Specs should assume a zero-manual-agent-config experience for end users unless a proposal explicitly justifies a temporary exception.
+
+  Backend task execution constraints:
+  - Prefer subprocess-based task execution for long-running backend jobs that should not block request handlers.
+  - Process lifecycle management is a required part of the architecture, not an implementation detail to ignore later.
+  - Specs should explicitly account for subprocess creation, status tracking, log capture, timeout handling, cancellation, retry policy if any, and guaranteed cleanup.
+  - Task workers must remain strict subprocesses of the main backend process for this prototype.
+  - Backend shutdown must terminate and clean up all task subprocesses; this behavior should be treated as required, not best-effort.
+  - Avoid leaking processes, zombie children, or detached jobs across app reloads, crashes, or manual restarts.
+  - If subprocesses create child processes of their own, the design should explain how the backend terminates the full process tree when appropriate.
+
+  Geospatial engineering constraints:
+  - This project is grounded in general geospatial analysis workflows over locally managed datasets, with Beijing FCD point data and related administrative boundary layers serving as the first KDE validation case.
+  - Engineering decisions should preserve a task-agnostic geospatial core: common task schema, CRS-aware preprocessing, verification, operator-specific execution, and artifact traceability.
+  - Engineering decisions should leave room for dynamic orchestrator decisions, reflection-triggered repair, and reusable role-specific skills rather than fixed application-authored recipes.
+  - Prefer Python-based backend and geospatial execution through the local backend environment and backend-hosted MCP tool paths over introducing additional services, queues, or distributed components.
+  - The architecture should make it easy to surface domain-critical details in the transcript UI, such as CRS, parameters, task progress, generated artifacts, and evidence-backed verification outcomes.
+
+  Non-goals for current specs:
+  - Do not treat this as a multi-user SaaS platform.
+  - Do not introduce authentication, RBAC, billing, or tenant management unless explicitly requested.
+  - Do not assume cloud object storage, distributed task queues, Kubernetes, microservices, or production-grade deployment complexity.
+  - Do not reframe the project as a generic geospatial SaaS product or an infinitely extensible platform detached from thesis needs.
+  - Do not add extra infrastructure when a local filesystem, a thin backend, a backend-managed runtime, and backend-hosted MCP capabilities are sufficient.
+  - Do not add hidden backend-authored workflow scripts, preset plans, or canned result pipelines as a shortcut for reproducibility.
+
+rules:
+  proposal:
+    - "Keep proposals engineering-focused and aligned to the confirmed architecture baseline in the context block."
+    - "Treat the chosen coding-agent runtime as the execution substrate and workflow owner, not as something to reimplement."
+    - "Prefer local-first, single-machine designs unless the prompt explicitly asks for remote deployment or production hardening."
+    - "Explicitly describe the system boundary between the Vue app, the Python backend APIs, the backend-hosted MCP capabilities, the coding-agent runtime, and the local Python geospatial execution layer."
+    - "Keep the prototype zero-config from the end user's perspective for agent-framework setup; do not require manual agent, skill, or MCP configuration files outside the application-managed bootstrap path."
+    - "Avoid inventing user systems, cloud infrastructure, distributed services, object storage, or large backend data models unless explicitly requested."
+    - "If proposing any backend persistence, explain why the managed runtime cannot remain the source of truth for that data."
+    - "When proposing geospatial capabilities, describe the reusable task-agnostic pieces separately from the first operator-specific implementation."
+    - "Reject proposals that depend on backend-authored fixed workflows, hidden prompt rewriting, or canned result templates."
+
+  specs:
+    - "Every engineering spec should state frontend responsibilities, Python backend responsibilities, runtime responsibilities, and local Python geospatial execution responsibilities separately."
+    - "Every engineering spec should also explain where MCP capabilities are hosted and how the runtime connects to them."
+    - "Default browser communication should go through the app's own web and Python backend surfaces rather than directly to runtime internals."
+    - "Default live-update transport should be SSE unless there is a specific need for WebSockets."
+    - "Specs should describe how a user sends a message, how the app streams agent updates, how agent questions are surfaced, and how artifacts are discovered and displayed."
+    - "Reuse runtime-native sessions, agents, subagent calls, skills or context, MCP integration, and tool execution wherever possible before adding app-specific orchestration logic; use the configured MCP todo bridge for app-visible todo state."
+    - "Specs must preserve the constraint that the user's prompt enters the main agent flow unchanged."
+    - "Specs must not introduce app-authored preset workflow graphs, hidden planning DSLs, or deterministic result scripts as the primary execution model."
+    - "Specs that describe multi-agent execution should model one orchestrator-led session that can dynamically interleave specialist subagents instead of forcing a fixed role order."
+    - "Specs should treat reflection or verification as visible runtime agent activity when the runtime can represent it, not as a hidden post-processing stage owned by the app."
+    - "UI specs should default to a message-first transcript or notebook with typed inline content blocks for tables, charts, maps, markdown reports, agent calls, and verification output."
+    - "UI specs should keep sidebars focused on minimal global state such as todo summaries, final artifacts, runtime status, and workspace entry points."
+    - "Any new geospatial feature must explain whether it belongs in a backend-hosted MCP capability or in local Python utilities invoked behind that MCP layer."
+    - "Specs for geospatial capabilities must identify the task family they support and clarify which parts are reusable preprocessing or verification versus operator-specific execution."
+    - "Any new storage requirement must explain what is stored locally, why it is not already available from runtime state, and where it lives on disk."
+    - "Assume no authentication and trusted local/demo usage unless the spec explicitly states a change in security scope."
+    - "Make local development and single-machine deployment the default operating assumption."
+    - "If a spec changes runtime management behavior, it must explain how the Python backend starts, stops, monitors, or reconnects to the runtime process or service, and how full application-owned config is applied."
+    - "If a spec introduces subprocess-based task execution, it must explain subprocess ownership, status tracking, cancellation, timeout behavior, stdout or stderr handling, and leak-prevention strategy."
+    - "Specs must preserve the prototype constraint that task workers are strict subprocesses of the backend process and are terminated when the backend exits."
+    - "Specs must not hand-wave subprocess cleanup; they should state how orphaned child processes are detected and terminated."
+
+  tasks:
+    - "Break work into thin end-to-end slices that keep the web app usable as early as possible."
+    - "Prioritize visible user flows such as create session, send message, stream updates, inspect todo or agent activity, answer questions, and view artifacts inline in the transcript."
+    - "Reuse runtime-native functionality before building custom backend abstractions."
+    - "Prefer implementing one reusable geospatial slice plus one concrete operator-first walkthrough, rather than building KDE-only plumbing that must later be rewritten."
+    - "Include validation steps proving a fresh user can start the prototype without manually creating agent, skill, MCP, or runtime configuration files beyond required secrets or dataset paths."
+    - "Keep the backend minimal and avoid introducing app-owned models unless they are truly necessary."
+    - "Prefer TypeScript for the frontend and Python for both the backend shell and geospatial tool execution."
+    - "Default to FastAPI for backend implementation unless a later spec provides a clear justification for another Python framework."
+    - "Prefer managed subprocess tasks over heavier background-job infrastructure unless the workload clearly outgrows the prototype architecture."
+    - "Include validation steps for runtime lifecycle management, runtime connectivity, config override success, SSE streaming, MCP connectivity, backend-exposed tool invocation, and local Python environment availability."
+    - "Include validation steps proving that backend shutdown also terminates active task subprocesses and does not leave leaked child processes behind."
+    - "Include validation steps for subprocess task startup, completion, cancellation, timeout handling, crash recovery, and process cleanup."
+    - "Keep scope appropriate for a thesis-supporting prototype rather than a production product."

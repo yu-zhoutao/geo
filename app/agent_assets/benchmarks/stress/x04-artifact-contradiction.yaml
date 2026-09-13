@@ -1,0 +1,18 @@
+id: X04
+split: stress
+difficulty: L3
+task_family: reporting-review
+gold_control_state: repair
+user_prompt: |
+  参数快照与图注中的带宽不一致，请捕获矛盾。
+dataset_pack: [parameter_snapshot.json, map_spec.json, draft_caption.md]
+required_artifacts: [skeptical_review.json]
+forbidden_moves: [ignore-artifact-contradiction]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-X04
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, stress-suite, stress-split, reporting-review-family, repair-case, judge-standard-v1]
+hazard_categories: [artifact-contradiction]

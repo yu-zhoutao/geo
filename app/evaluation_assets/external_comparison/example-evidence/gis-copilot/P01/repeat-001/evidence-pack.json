@@ -1,0 +1,38 @@
+{
+  "schema": "geo-agent.evaluation.external-evidence-pack.v1",
+  "framework_id": "gis-copilot",
+  "scenario_id": "P01",
+  "repeat_index": 1,
+  "original_prompt": "使用附件数据目录中的 FCD数据/sample_200_taxis.jsonl 作为北京出租车轨迹样本，\n结合 北京市道路街道区县shp文件/beijing-区县界_region.shp 或乡镇界作为研究区边界，\n对有效出租车点事件完成 KDE 热点分析。请先检查经纬度范围、CRS、点数量和异常值，\n再选择米制投影、带宽和像元大小，并在结论中只讨论事件密度集中区域，不要把 KDE\n解释为统计显著热点。",
+  "dataset_root": "data",
+  "dataset_pack": [
+    "FCD数据/sample_200_taxis.jsonl",
+    "北京市道路街道区县shp文件/beijing-区县界_region.shp",
+    "北京市道路街道区县shp文件/beijing-乡镇界_region.shp"
+  ],
+  "dataset_import_notes": "Example fixture only. A real GIS Copilot run should load the same three files into QGIS or its script environment.",
+  "run_status": {
+    "status": "completed",
+    "terminal_reason": "completed",
+    "timed_out": false,
+    "duration_seconds": 180.0,
+    "started_at": "2026-05-03T12:00:00+08:00",
+    "finished_at": "2026-05-03T12:03:00+08:00",
+    "errors": []
+  },
+  "model": {
+    "provider": "example",
+    "model": "example-model",
+    "temperature": 0.0
+  },
+  "final_answer_path": "final-answer.md",
+  "failure_note": "",
+  "operator_notes_path": "operator-notes.md",
+  "evidence": {
+    "transcript": ["transcript.md"],
+    "logs": ["logs/run.log"],
+    "generated_code": ["generated/analysis.py"],
+    "tool_notes": [],
+    "artifacts": ["artifacts/map-summary.md"]
+  }
+}

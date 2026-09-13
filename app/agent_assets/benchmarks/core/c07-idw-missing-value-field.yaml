@@ -1,0 +1,18 @@
+id: C07
+split: dev
+difficulty: L2
+task_family: spatial_interpolation
+gold_control_state: clarify
+user_prompt: |
+  把这些监测站点插值成一个连续表面。
+dataset_pack: [monitoring_points.geojson, study_area.geojson]
+required_artifacts: [study_design.json, data_audit.json, claim_trace.json]
+forbidden_moves: [run-idw-without-value-field, route-idw-to-kde]
+dataset_root: app/agent_assets/benchmarks/datasets
+dataset_pack_mode: synthetic
+oracle_id: ORACLE-C07
+deterministic_checks: [control-state, forbidden-moves, claim-constraints]
+judge_rubric: geospatial-task-quality-v2
+scoring_weight: 1.0
+subset_tags: [full-suite, core-suite, dev-split, spatial-interpolation-family, clarify-case, judge-standard-v1, ablation-representative, structural-baseline]
+hazard_categories: [idw-missing-value-field, clarify-value-field, interpolation-method-fit]

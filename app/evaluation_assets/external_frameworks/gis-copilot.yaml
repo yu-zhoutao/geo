@@ -1,0 +1,12 @@
+id: gis-copilot
+label: GIS Copilot
+framework_type: qgis-platform-agent
+expected_execution_mode: qgis-plugin
+zotero_key: V46AX5ZC
+citation_note: Akinboyewa et al. 2025 GIS Copilot
+source_url: https://github.com/Teakinboyewa/SpatialAnalysisAgent
+paper_url: https://www.tandfonline.com/doi/full/10.1080/17538947.2025.2497489
+default_model: operator-recorded
+runtime_notes: |
+  Run through the GIS Copilot QGIS plugin or its published scripts when available.
+  Preserve QGIS project setup, plugin logs, generated scripts, final answer, and output layers in an evidence pack.

@@ -1,0 +1,28 @@
+id: campaign-id
+benchmark_version: benchmark-version
+benchmark_root: app/agent_assets/benchmarks
+scenario_selector: full-suite | ablation-representative | thesis-core-real-v1
+variants:
+  - variant-id
+full_system_selector: full-suite | thesis-core-real-v1
+full_system_repeats: positive-integer
+comparison_selector: ablation-representative | thesis-ablation-real-v1
+comparison_repeats: positive-integer
+wall_clock_budget_seconds: nonnegative-integer-zero-means-unlimited
+max_turns: nonnegative-integer-zero-means-unlimited
+fairness_model: inherit | model-id | variant-specific
+fairness_temperature: number-0-to-1
+fairness_dataset_policy: scenario-dataset-pack
+fairness_tool_policy: shared-tool-catalog | variant-defined-tool-catalog
+fairness_runtime_policy: shared-budget | variant-specific
+runner_isolation_mode: per-campaign | per-run
+runner_resume_policy: append-attempts | fail-if-existing
+runner_readiness_timeout_seconds: positive-integer
+scoring_mode: none | llm-judge
+judge_model: configured-evaluation-judge
+judge_temperature: number-0-to-1
+output_root: evaluation-runs
+output_directory_policy: timestamped-campaign-dir | explicit-empty-directory
+notes: |
+  Campaign manifests pin benchmark selection, variants, repeats, budgets,
+  fairness controls, runner behavior, scoring settings, and output policy.

@@ -1,0 +1,8 @@
+id: strategy-id
+label: Human-readable strategy label
+source: curated-profile
+focus_dimensions:
+  - crs_and_units
+guidance: |
+  Strategy emphasis applied to generated runtime assets.
+agent_asset_overlay_root: none | app/evaluation_assets/strategy_overlays/strategy-id

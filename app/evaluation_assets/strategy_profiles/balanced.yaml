@@ -1,0 +1,9 @@
+id: balanced
+label: Balanced baseline strategy
+source: curated-profile
+focus_dimensions:
+  - overall_task_success
+  - execution_correctness
+  - map_and_report_quality
+guidance: |
+  Use the normal balanced geospatial multi-agent behavior. Keep method selection, data readiness, CRS handling, execution, evidence packaging, and final reporting in proportion to the task risk. Do not add extra fixed steps beyond what the live evidence requires.

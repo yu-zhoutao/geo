@@ -1,0 +1,12 @@
+id: thesis-giscopilot-geocogent-v1
+label: Thesis GIS Copilot and GeoCogent comparison
+benchmark_root: app/agent_assets/benchmarks
+scenario_selector: thesis-ablation-real-v1
+scenario_ids: [P01, C09, R07, X01]
+framework_ids: [gis-copilot, geocogent]
+repeat_count: 3
+judge_rubric: geospatial-task-quality-v2
+notes: |
+  Thesis external comparison subset. It reuses the real-data ablation subset so each external framework runs one
+  proceed, clarify, repair, and stop case under the same geospatial-quality judge rubric, with three attempts per
+  scenario to match the internal ablation campaign protocol.

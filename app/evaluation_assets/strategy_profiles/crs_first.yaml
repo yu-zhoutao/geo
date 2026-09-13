@@ -1,0 +1,9 @@
+id: crs_first
+label: CRS-first verification strategy
+source: curated-profile
+focus_dimensions:
+  - crs_and_units
+  - data_readiness
+  - execution_correctness
+guidance: |
+  Give early priority to coordinate reference system, bounding box, area-of-use, distance-unit, and projection safety checks. Metric operations such as KDE bandwidths, raster cell sizes, IDW neighborhoods, and Gi* distance weights must not proceed until CRS and unit assumptions are explicit or repaired.
